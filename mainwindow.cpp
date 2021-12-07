@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 
 #include <QHBoxLayout>
+#include <QFont>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    this->setFixedSize(800,400);
     m_player = new musicplayer(this);
     m_countTimer = new timer(this);
     initUI();
@@ -42,9 +44,11 @@ void MainWindow::initUI()
 
     bgmLayout->addWidget(m_bgmLabel);
     bgmLayout->addWidget(m_bgmBox);
+    bgmLayout->addStretch();
 
     timeLayout->addWidget(m_timeEdit);
     timeLayout->addWidget(m_timeLabel);
+    timeLayout->addStretch();
     timeLayout->addWidget(m_startbtn);
     timeLayout->addWidget(m_cancelbtn);
     timeLayout->addWidget(m_pausebtn);
@@ -60,6 +64,8 @@ void MainWindow::initUI()
     window->setLayout(mainLayout);
     setCentralWidget(window);
 
+    QFont labelFont;
+    labelFont.setPointSize(200);
 
     m_bgmLabel->setText(tr("bgm"));
     m_bgmBox->addItem(tr("bgm1"));
@@ -78,11 +84,23 @@ void MainWindow::initUI()
     m_pausebtn->setEnabled(false);
     m_cancelbtn->setEnabled(false);
 
+    m_minuteLabel->setFont(labelFont);
+    m_colonLabel->setFont(labelFont);
+    m_secondLabel->setFont(labelFont);
+    m_minuteLabel->setAlignment(Qt::AlignCenter);
+    m_colonLabel->setAlignment(Qt::AlignCenter);
+    m_secondLabel->setAlignment(Qt::AlignCenter);
+
+    m_bgmLabel->setFixedWidth(80);
+    m_bgmBox->setFixedWidth(100);
+
+    m_timeEdit->setFixedWidth(100);
+
     connect(m_startbtn, &QPushButton::clicked, this, &MainWindow::onStartBtnClicked);
     connect(m_pausebtn, &QPushButton::clicked, this, &MainWindow::onPauseBtnClicked);
     connect(m_cancelbtn, &QPushButton::clicked, this, &MainWindow::onCancelBtnClicked);
-//    connect(m_countTimer, &timer::countChanged, this, &MainWindow::setCountView);
-//    connect(m_countTimer, &timer::timerFinished, this, &MainWindow::onCancelBtnClicked);
+    connect(m_countTimer, &timer::countChanged, this, &MainWindow::setCountView);
+    connect(m_countTimer, &timer::timerFinished, this, &MainWindow::onCancelBtnClicked);
 }
 
 void MainWindow::onStartBtnClicked()
@@ -103,6 +121,8 @@ void MainWindow::onCancelBtnClicked()
     m_startbtn->setEnabled(true);
     m_pausebtn->setEnabled(false);
     m_cancelbtn->setEnabled(false);
+    m_minuteLabel->setText(tr("00"));
+    m_secondLabel->setText(tr("00"));
 }
 
 void MainWindow::onPauseBtnClicked()
@@ -128,5 +148,20 @@ void MainWindow::onPauseBtnClicked()
 
 void MainWindow::setCountView()
 {
-
+    if (m_countTimer->countDown() / 60 < 10)
+    {
+        m_minuteLabel->setText(QString("0%1").arg(QString::number(m_countTimer->countDown() / 60)));
+    }
+    else
+    {
+        m_minuteLabel->setText(QString::number(m_countTimer->countDown() / 60));
+    }
+    if (m_countTimer->countDown() % 60 < 10)
+    {
+        m_secondLabel->setText(QString("0%1").arg(QString::number(m_countTimer->countDown() % 60)));
+    }
+    else
+    {
+        m_secondLabel->setText(QString::number(m_countTimer->countDown() % 60));
+    }
 }

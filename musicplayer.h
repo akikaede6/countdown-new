@@ -6,6 +6,7 @@
 
 class musicplayer: public QWidget
 {
+    Q_OBJECT
 public:
     explicit musicplayer(QWidget * parent = nullptr);
 

@@ -5,6 +5,7 @@
 
 class timer: public QWidget
 {
+    Q_OBJECT
 public:
     explicit timer(QWidget * parent = nullptr);
 
@@ -12,7 +13,7 @@ public:
     void setCountDown(int countDown);
 
 signals:
-//    void timerFinished();
+    void timerFinished();
     void countChanged();
 
 public slots:

@@ -32,7 +32,7 @@ void timer::onTimerOut()
     }
     else
     {
-//        emit timerFinished();
+        emit timerFinished();
         return;
     }
     qInfo() << m_countDown;
