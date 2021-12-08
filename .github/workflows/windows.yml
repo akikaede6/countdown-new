@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '*.pro'
+      - 'scripts/**'
       - 'src/**'
       - '.github/workflows/windows.yml'
   pull_request:
