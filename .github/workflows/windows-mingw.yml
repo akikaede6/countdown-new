@@ -3,7 +3,6 @@ on:
   push:
     paths:
       - '*.pro'
-      - 'scripts/**'
       - 'src/**'
       - '.github/workflows/windows-mingw.yml'
   pull_request:
@@ -57,11 +56,11 @@ jobs:
           qmake
           mingw32-make
       - name: Download URL
-      uses: actions/download-artifact@v1
-      with:
-        name: upload_url
-        path: ./
-    - id: set_upload_url
-      run: |
-        upload_url=`cat ./upload_url`
-        echo ::set-output name=upload_url::$upload_url
+        uses: actions/download-artifact@v1
+        with:
+          name: upload_url
+          path: ./
+      - id: set_upload_url
+        run: |
+          upload_url=`cat ./upload_url`
+          echo ::set-output name=upload_url::$upload_url
