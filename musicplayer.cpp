@@ -4,9 +4,9 @@ musicplayer::musicplayer(QWidget * parent) : QWidget(parent)
 {
     m_musicPlayer = new QMediaPlayer(this);
     m_musicPlayerList = new QMediaPlaylist(this);
-    m_musicPlayerList->addMedia(QUrl::fromLocalFile("/home/aki/1.mp3"));
-    m_musicPlayerList->addMedia(QUrl::fromLocalFile("/home/aki/2.mp3"));
-    m_musicPlayerList->addMedia(QUrl::fromLocalFile("/home/aki/3.mp3"));
+    m_musicPlayerList->addMedia(QUrl("qrc:/bgm1.mp3"));
+    m_musicPlayerList->addMedia(QUrl("qrc:/bgm2.mp3"));
+    m_musicPlayerList->addMedia(QUrl("qrc:/bgm3.mp3"));
     m_musicPlayer->setPlaylist(m_musicPlayerList);
     m_musicPlayerList->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
 }
