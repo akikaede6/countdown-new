@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '*.pro'
+      - 'scripts/**'
       - 'src/**'
       - '.github/workflows/windows-mingw.yml'
   pull_request:
