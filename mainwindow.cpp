@@ -1,22 +1,18 @@
 #include "mainwindow.h"
 
-#include <QHBoxLayout>
 #include <QFont>
-
+#include <QHBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    this->setFixedSize(800,400);
+    this->setFixedSize(800, 400);
     m_player = new musicplayer(this);
     m_countTimer = new timer(this);
     initUI();
 }
 
-MainWindow::~MainWindow()
-{
-
-}
+MainWindow::~MainWindow() {}
 
 void MainWindow::initUI()
 {
@@ -41,7 +37,6 @@ void MainWindow::initUI()
     m_colonLabel = new QLabel;
     m_secondLabel = new QLabel;
 
-
     bgmLayout->addWidget(m_bgmLabel);
     bgmLayout->addWidget(m_bgmBox);
     bgmLayout->addStretch();
@@ -65,7 +60,7 @@ void MainWindow::initUI()
     setCentralWidget(window);
 
     QFont labelFont;
-    labelFont.setPointSize(200);
+    labelFont.setPixelSize(200);
 
     m_bgmLabel->setText(tr("bgm"));
     m_bgmBox->addItem(tr("bgm1"));
@@ -127,20 +122,15 @@ void MainWindow::onCancelBtnClicked()
 
 void MainWindow::onPauseBtnClicked()
 {
-    if (m_player->getPlayState() == QMediaPlayer::PlayingState)
-    {
+    if (m_player->getPlayState() == QMediaPlayer::PlayingState) {
         m_player->pauseMusic();
         m_countTimer->pauseTimer();
         m_pausebtn->setText(tr("continue"));
-    }
-    else if (m_player->getPlayState() == QMediaPlayer::PausedState)
-    {
+    } else if (m_player->getPlayState() == QMediaPlayer::PausedState) {
         m_player->startMusic();
         m_countTimer->startTimer();
         m_pausebtn->setText(tr("pause"));
-    }
-    else
-    {
+    } else {
         qCritical() << "play state error";
         return;
     }
@@ -148,20 +138,14 @@ void MainWindow::onPauseBtnClicked()
 
 void MainWindow::setCountView()
 {
-    if (m_countTimer->countDown() / 60 < 10)
-    {
+    if (m_countTimer->countDown() / 60 < 10) {
         m_minuteLabel->setText(QString("0%1").arg(QString::number(m_countTimer->countDown() / 60)));
-    }
-    else
-    {
+    } else {
         m_minuteLabel->setText(QString::number(m_countTimer->countDown() / 60));
     }
-    if (m_countTimer->countDown() % 60 < 10)
-    {
+    if (m_countTimer->countDown() % 60 < 10) {
         m_secondLabel->setText(QString("0%1").arg(QString::number(m_countTimer->countDown() % 60)));
-    }
-    else
-    {
+    } else {
         m_secondLabel->setText(QString::number(m_countTimer->countDown() % 60));
     }
 }
